@@ -8,3 +8,5 @@ Non so se anche voi usate spesso il PC per lavoro, come succede a me; personalme
     - b[reat]h, per ricordarmi di prestare attenzione al respiro (compare come "b...h", in quanto può essere che abbia colleghi al PC con me, e non voglio dilungarmi in spiegazioni)
 	- h[and]s (mani), f[ee]t (piedi), l[eg]s (gambe), h[ea]d (testa)
 Il programmino non ha un'interfaccia grafica, tranne un'iconcina (una "trayicon"): click col tasto destro per uscire dall'applicazione.
+
+A me personalmente aiuta a stare un po' più centrato durante l'attività lavorativa, e ho pensato che valesse la pena condividere con tutti! ^_^
