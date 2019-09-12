@@ -73,18 +73,21 @@ namespace WindowsFormsApp2
 
             itemsIndex = (int)randomColor.Next(0, items.Length);
 
-            tooltip.Show(items[itemsIndex].getText(), this, randomPosition.Next(0, Width), randomPosition.Next(0, Height), POPUP_TIME);
             trayIcon.Icon = Resources.leaf_green;
+            timer2.Interval = ICON_ON_TIME;
+            timer2.Start();
+
+            tooltip.Show(items[itemsIndex].getText(), this, randomPosition.Next(0, Width), randomPosition.Next(0, Height), POPUP_TIME);
 
             timer1.Interval = randomTick.Next(MIN_TICK, MAX_TICK);
-            timer2.Interval = ICON_ON_TIME;
-            lastTick = DateTime.Now;
 
+            lastTick = DateTime.Now;
         }
 
         private void timer2_Tick(object sender, EventArgs e)
         {
             trayIcon.Icon = Resources.leaf_grey;
+            timer2.Stop();
         }
 
 
