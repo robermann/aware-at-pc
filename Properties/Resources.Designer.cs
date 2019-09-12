@@ -69,5 +69,25 @@ namespace aware_at_pc.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
+        /// </summary>
+        internal static System.Drawing.Icon leaf_green {
+            get {
+                object obj = ResourceManager.GetObject("leaf_green", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
+        /// </summary>
+        internal static System.Drawing.Icon leaf_grey {
+            get {
+                object obj = ResourceManager.GetObject("leaf_grey", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

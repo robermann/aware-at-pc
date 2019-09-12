@@ -27,7 +27,8 @@ namespace WindowsFormsApp2
 
         const int MAX_TICK = 1000 * 60 * 5; // 5 minutes
         const int MIN_TICK = 1000 * 30;     //30 seconds
-        const int SHOW_TIME = 2000;         //2 seconds
+        const int POPUP_TIME = 2000;        // 2 seconds
+        const int ICON_ON_TIME = 8000;      // 8 seconds
 
         const int TEST_TICK = 2000;
 
@@ -61,6 +62,7 @@ namespace WindowsFormsApp2
                 }),
                 Visible = true
             };
+            trayIcon.Icon = Resources.leaf_green;
             trayIcon.MouseMove += new MouseEventHandler(this.NotifyIcon1_MouseMove);
             #endregion
         }
@@ -70,14 +72,21 @@ namespace WindowsFormsApp2
             BringToFront();
 
             itemsIndex = (int)randomColor.Next(0, items.Length);
-            
-            //". . ."
-            tooltip.Show(items[itemsIndex].getText(), this, randomPosition.Next(0, Width), randomPosition.Next(0, Height), SHOW_TIME);
+
+            tooltip.Show(items[itemsIndex].getText(), this, randomPosition.Next(0, Width), randomPosition.Next(0, Height), POPUP_TIME);
+            trayIcon.Icon = Resources.leaf_green;
 
             timer1.Interval = randomTick.Next(MIN_TICK, MAX_TICK);
+            timer2.Interval = ICON_ON_TIME;
             lastTick = DateTime.Now;
 
         }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            trayIcon.Icon = Resources.leaf_grey;
+        }
+
 
         private void NotifyIcon1_MouseMove(Object sender, MouseEventArgs e)
         {
