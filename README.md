@@ -1,6 +1,8 @@
 # aware@pc
 *Be a mindful worker: remind to be aware of yourself, when working at the computer!*
 
+**[Download .exe](https://www.dropbox.com/s/wmromf9jmlwtgkv/Aware%40pc.exe?dl=0)**
+
 Non so se anche voi usate spesso il PC per lavoro, come succede a me; personalmente mi sorprendo ad essere frequentemente dimentico di me stesso, perso nei ragionamenti o in generale assorbito dalle ordinarie attività d'ufficio. Pertanto mi sono scritto un piccolo programmino (.NET) per PC Windows, che ha il compito di ricordarmi di prestare attenzione a me stesso. In sostanza:
   - ad intervalli di tempo casuali, entro 5 minuti, mostra una scritta colorata (un "tooltip") sullo schermo, posizionata in punti sempre diversi; contemporaneamente l'iconcina applicativa ("trayicon") cambia colore
   - tale scritta scompare in automatico dopo circa 2 secondi (non voglio che sia invasiva o che richieda una mia azione manuale per chiuderla)
