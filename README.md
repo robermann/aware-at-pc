@@ -1,7 +1,7 @@
 # aware@pc
 *Be a mindful worker: remind to be aware of yourself, when working at the computer!*
 
-**[Download .exe](https://www.dropbox.com/s/wmromf9jmlwtgkv/Aware%40pc.exe?dl=0)**
+**[Download .exe](https://www.dropbox.com/scl/fi/xxb3f2am2wbhg3ebizubs/Aware-pc.exe?rlkey=9gxkdizyz3gjqm76z1ti5jw7e&dl=0)**
 
 **(English)**
 
