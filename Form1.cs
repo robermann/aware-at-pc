@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Media;
 using System.Windows.Forms;
 using aware_at_pc.Properties;
 
@@ -25,10 +20,13 @@ namespace WindowsFormsApp2
         private Random randomColor = new Random();
         private Random randomPosition = new Random();
 
-        const int MAX_TICK = 1000 * 60 * 5; // 5 minutes
+        const int MAX_TICK = 1000 * 60 * 2; // 3 minutes
         const int MIN_TICK = 1000 * 30;     //30 seconds
-        const int POPUP_TIME = 2000;        // 2 seconds
+        const int POPUP_TIME = 5000;        // 3 seconds
         const int ICON_ON_TIME = 8000;      // 8 seconds
+
+        readonly int MAX_SCREEN_WIDTH;
+        readonly int MAX_SCREEN_HEIGHT;
 
         const int TEST_TICK = 2000;
 
@@ -41,12 +39,18 @@ namespace WindowsFormsApp2
             new Item("h..s", Color.Red),
             new Item("l..s", Color.Yellow),
             new Item("b..t", Color.Orange),
-            new Item("f..t", Color.LightGreen)
+            new Item("f..t", Color.LightGreen),
+            new Item("b..y", Color.BlueViolet)
         };
 
         public Form1()
         {
             InitializeComponent();
+
+            MAX_SCREEN_WIDTH = GetScreen().Width - 100;
+            MAX_SCREEN_HEIGHT = GetScreen().Height - 50;
+
+            Console.WriteLine("Max screen size = " + MAX_SCREEN_WIDTH + ":" + MAX_SCREEN_HEIGHT);
 
             #region Personalizzo il tooltip
             tooltip.OwnerDraw = true;
@@ -67,9 +71,16 @@ namespace WindowsFormsApp2
             #endregion
         }
 
+        public Rectangle GetScreen()
+        {
+            return Screen.FromControl(this).Bounds;
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             BringToFront();
+
+            SystemSounds.Hand.Play();
 
             itemsIndex = (int)randomColor.Next(0, items.Length);
 
@@ -77,7 +88,16 @@ namespace WindowsFormsApp2
             timer2.Interval = ICON_ON_TIME;
             timer2.Start();
 
-            tooltip.Show(items[itemsIndex].getText(), this, randomPosition.Next(0, Width), randomPosition.Next(0, Height), POPUP_TIME);
+            int randomX = randomPosition.Next(10, MAX_SCREEN_WIDTH);
+            int randomY = randomPosition.Next(10, MAX_SCREEN_HEIGHT);
+            String text = items[itemsIndex].getText();
+
+            //randomX = 1266; 
+            //randomY = 624;
+
+            Console.WriteLine(DateTime.Now + " - \"" + text + "\" - X:Y = " +randomX+":"+randomY);
+
+            tooltip.Show(text, this, randomX, randomY, POPUP_TIME);
 
             timer1.Interval = randomTick.Next(MIN_TICK, MAX_TICK);
 
@@ -90,13 +110,12 @@ namespace WindowsFormsApp2
             timer2.Stop();
         }
 
-
         private void NotifyIcon1_MouseMove(Object sender, MouseEventArgs e)
         {
             int remainingMilliseconds = (int)(lastTick.AddMilliseconds(timer1.Interval).Subtract(DateTime.Now).TotalMilliseconds);
 
             TimeSpan t = TimeSpan.FromMilliseconds(remainingMilliseconds);
-            string text = string.Format("{0:D2}m:{1:D2}s", 
+            string text = string.Format("{0:D2}m:{1:D2}s",
                 t.Minutes,
                 t.Seconds);
 
