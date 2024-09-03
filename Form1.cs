@@ -20,9 +20,11 @@ namespace WindowsFormsApp2
         private Random randomColor = new Random();
         private Random randomPosition = new Random();
 
-        const int MAX_TICK = 1000 * 60 * 2; // 3 minutes
+        private Boolean updateTooltip = false;
+
+        const int MAX_TICK = 1000 * 60 * 2; // 2 minutes
         const int MIN_TICK = 1000 * 30;     //30 seconds
-        const int POPUP_TIME = 5000;        // 3 seconds
+        const int POPUP_TIME = 5000;        // 5 seconds
         const int ICON_ON_TIME = 8000;      // 8 seconds
 
         readonly int MAX_SCREEN_WIDTH;
@@ -67,8 +69,32 @@ namespace WindowsFormsApp2
                 Visible = true
             };
             trayIcon.Icon = Resources.leaf_green;
+          
+            trayIcon.Click += new EventHandler(this.enableTooltip);
+            trayIcon.MouseMove += new MouseEventHandler(this.onceTooltip);
+            trayIcon.DoubleClick += new EventHandler(this.disableTooltip);
+
             #endregion
         }
+
+        private void disableTooltip(object sender, EventArgs e)
+        {
+            this.updateTooltip = false;
+            trayIcon.Text = null;
+            //Console.WriteLine(DateTime.Now + " - disableTooltip");
+        }
+
+        private void enableTooltip(Object sender, EventArgs e)
+        {
+            this.updateTooltip = true;
+            //Console.WriteLine(DateTime.Now + " - enableTooltip");
+        }
+
+        private void onceTooltip(Object sender, MouseEventArgs e)
+        {
+            showTooltip(false);
+        }
+
 
         public Rectangle GetScreen()
         {
@@ -94,13 +120,14 @@ namespace WindowsFormsApp2
             //randomX = 242; 
             //randomY = 612;
 
-            Console.WriteLine(DateTime.Now + " - \"" + text + "\" - X:Y = " +randomX+":"+randomY);
+            Console.WriteLine(DateTime.Now + " - \"" + text + "\" - X:Y = " + randomX + ":" + randomY);
 
             tooltip.Show(text, this, randomX, randomY, POPUP_TIME);
 
             timer1.Interval = randomTick.Next(MIN_TICK, MAX_TICK);
 
             lastTick = DateTime.Now;
+
         }
 
         private void timer2_Tick(object sender, EventArgs e)
@@ -111,7 +138,16 @@ namespace WindowsFormsApp2
 
         private void timer3_Tick(object sender, EventArgs e)
         {
-            
+            //Console.WriteLine(DateTime.Now+" --> "+ updateTooltip);
+
+            if (updateTooltip)
+            {
+                showTooltip(true);
+            }
+        }
+
+        private void showTooltip(Boolean refresh)
+        {
             int remainingMilliseconds = (int)(lastTick.AddMilliseconds(timer1.Interval).Subtract(DateTime.Now).TotalMilliseconds);
 
             TimeSpan t = TimeSpan.FromMilliseconds(remainingMilliseconds);
@@ -119,16 +155,17 @@ namespace WindowsFormsApp2
                 t.Minutes,
                 t.Seconds);
 
-            trayIcon.Visible = false;
-            trayIcon.Text = text + " left";
-            trayIcon.Visible = true;
+            if (refresh) trayIcon.Visible = false;
             
+            trayIcon.Text = text + " left";
+            
+            if (refresh) trayIcon.Visible = true;
         }
 
         void toolTip1_Draw(object sender, DrawToolTipEventArgs e)
         {
             Font f = new Font("Arial", 10.0f);
-            
+
             tooltip.BackColor = items[itemsIndex].getColor();
             e.DrawBackground();
             e.DrawBorder();
