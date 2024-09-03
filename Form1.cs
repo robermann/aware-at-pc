@@ -67,7 +67,6 @@ namespace WindowsFormsApp2
                 Visible = true
             };
             trayIcon.Icon = Resources.leaf_green;
-            trayIcon.MouseMove += new MouseEventHandler(this.NotifyIcon1_MouseMove);
             #endregion
         }
 
@@ -92,8 +91,8 @@ namespace WindowsFormsApp2
             int randomY = randomPosition.Next(10, MAX_SCREEN_HEIGHT);
             String text = items[itemsIndex].getText();
 
-            //randomX = 1266; 
-            //randomY = 624;
+            //randomX = 242; 
+            //randomY = 612;
 
             Console.WriteLine(DateTime.Now + " - \"" + text + "\" - X:Y = " +randomX+":"+randomY);
 
@@ -110,8 +109,9 @@ namespace WindowsFormsApp2
             timer2.Stop();
         }
 
-        private void NotifyIcon1_MouseMove(Object sender, MouseEventArgs e)
+        private void timer3_Tick(object sender, EventArgs e)
         {
+            
             int remainingMilliseconds = (int)(lastTick.AddMilliseconds(timer1.Interval).Subtract(DateTime.Now).TotalMilliseconds);
 
             TimeSpan t = TimeSpan.FromMilliseconds(remainingMilliseconds);
@@ -119,7 +119,10 @@ namespace WindowsFormsApp2
                 t.Minutes,
                 t.Seconds);
 
+            trayIcon.Visible = false;
             trayIcon.Text = text + " left";
+            trayIcon.Visible = true;
+            
         }
 
         void toolTip1_Draw(object sender, DrawToolTipEventArgs e)
